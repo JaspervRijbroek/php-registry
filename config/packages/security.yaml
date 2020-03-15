@@ -1,0 +1,20 @@
+security:
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+
+  firewalls:
+    main:
+      anonymous: lazy
+      guard:
+        authenticators:
+          - App\Security\TokenAuthenticator
+
+  access_control:
+    - { path: "whoami$", roles: ROLE_USER, methods: ["GET"]}
+
+  providers:
+    users:
+      entity:
+        class: App\Entity\User
+        property: email
