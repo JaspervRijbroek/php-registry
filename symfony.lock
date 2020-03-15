@@ -108,6 +108,9 @@
     "psr/log": {
         "version": "1.1.x-dev"
     },
+    "symfony/annotations-pack": {
+        "version": "dev-master"
+    },
     "symfony/cache": {
         "version": "4.3.x-dev"
     },
@@ -196,6 +199,9 @@
     "symfony/http-kernel": {
         "version": "4.3.x-dev"
     },
+    "symfony/inflector": {
+        "version": "4.4.x-dev"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -217,6 +223,9 @@
     "symfony/polyfill-php73": {
         "version": "1.15-dev"
     },
+    "symfony/property-access": {
+        "version": "4.4.x-dev"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -230,6 +239,30 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/security-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "7b4408dc203049666fe23fabed23cbadc6d8440f"
+        },
+        "files": [
+            "config/packages/security.yaml"
+        ]
+    },
+    "symfony/security-core": {
+        "version": "4.4.x-dev"
+    },
+    "symfony/security-csrf": {
+        "version": "4.4.x-dev"
+    },
+    "symfony/security-guard": {
+        "version": "4.4.x-dev"
+    },
+    "symfony/security-http": {
+        "version": "4.4.x-dev"
     },
     "symfony/service-contracts": {
         "version": "v1.1.8"
