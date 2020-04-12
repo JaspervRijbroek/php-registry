@@ -18,9 +18,9 @@ jobs:
         # FTP host
         ftp_host: files.000webhost.com
         # FTP username
-        ftp_username: ${secrets.ftp_username}
+        ftp_username: ${secrets.FTP_USERNAME}
         # FTP password
-        ftp_password: ${secrets.ftp_password}
+        ftp_password: ${secrets.FTP_PASSWORD}
         # The local folder to copy
         local_source_dir: .
         # The remote folder
