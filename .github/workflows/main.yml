@@ -25,3 +25,4 @@ jobs:
         local_source_dir: .
         # The remote folder
         dist_target_dir: /symfony
+        disable_ssl_certificate_verification: false
