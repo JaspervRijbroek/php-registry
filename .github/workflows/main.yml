@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: php-actions/composer@v1
+    - name: Simple FTP deploy
+      uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
+      with:
+        # FTP host
+        ftp_host: files.000webhost.com
+        # FTP username
+        ftp_username: ${secrets.ftp_username}
+        # FTP password
+        ftp_password: ${secrets.ftp_password}
+        # The local folder to copy
+        local_source_dir: .
+        # The remote folder
+        dist_target_dir: /storage/ssd4/641/12851641
