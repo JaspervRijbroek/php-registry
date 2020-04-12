@@ -27,6 +27,6 @@ class UserController extends AbstractController
      */
     public function logout(Request $request)
     {
-
+        die('Called');
     }
 }
