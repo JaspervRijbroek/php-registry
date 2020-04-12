@@ -24,4 +24,4 @@ jobs:
         # The local folder to copy
         local_source_dir: .
         # The remote folder
-        dist_target_dir: /storage/ssd4/641/12851641
+        dist_target_dir: /symfony
