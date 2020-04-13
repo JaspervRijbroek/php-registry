@@ -12,7 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: php-actions/composer@v1
-    - name: Deploy to ftp
-      run: |
-        sudo apt-get install lftp
-        lftp files.000webhost.com -u ${{secrets.FTP_USERNAME}},${{secrets.FTP_PASSWORD}} -e "mirror --verbose --reverse . /symfony; exit"
+    - name: Simple FTP deploy
+      uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
+      with:
+        # FTP host
+        ftp_host: files.000webhost.com
+        # FTP username
+        ftp_username: ${{secrets.FTP_USERNAME}}
+        # FTP password
+        ftp_password: ${{secrets.FTP_PASSWORD}}
+        # The local folder to copy
+        local_source_dir: .
+        # The remote folder
+        dist_target_dir: /symfony
