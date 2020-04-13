@@ -15,4 +15,4 @@ jobs:
     - name: Deploy to ftp
       run: |
         sudo apt-get install lftp
-        lftp files.000webhost.com -u ${secrets.FTP_USERNAME},${secrets.FTP_PASSWORD} -e "mirror --verbose --reverse . /symfony; exit"
+        lftp files.000webhost.com -u ${{secrets.FTP_USERNAME}},${{secrets.FTP_PASSWORD}} -e "mirror --verbose --reverse . /symfony; exit"
