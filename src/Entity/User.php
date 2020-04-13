@@ -34,9 +34,14 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      */
     private $token;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
 
     public function getId(): ?int
     {
@@ -124,6 +129,13 @@ class User implements UserInterface
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

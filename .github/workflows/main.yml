@@ -12,16 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: php-actions/composer@v1
-    - name: Simple FTP deploy
-      uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
+    - name: git-ftp push
+      uses: sebastianpopp/git-ftp-action@releases/v3
       with:
-        # FTP host
-        ftp_host: files.000webhost.com
-        # FTP username
-        ftp_username: ${{secrets.FTP_USERNAME}}
-        # FTP password
-        ftp_password: ${{secrets.FTP_PASSWORD}}
-        # The local folder to copy
-        local_source_dir: .
-        # The remote folder
-        dist_target_dir: /symfony
+        url: "ftp://files.000webhost.com/symfony/"
+        user: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}

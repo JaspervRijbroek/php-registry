@@ -13,11 +13,17 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        $package = $this->getDoctrine()
-            ->getRepository(Package::class)
-            ->find('1');
-
-        var_dump($package);
-        die('Called');
+        return $this->json(
+            [
+                'success' => true
+            ]
+        );
+//
+//        $package = $this->getDoctrine()
+//            ->getRepository(Package::class)
+//            ->find('1');
+//
+//        var_dump($package);
+//        die('Called');
     }
 }
