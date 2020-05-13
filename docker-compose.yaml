@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    build: './.docker/build/php/'
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 1337:80
