@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Model\Users;
 use Library\Controller;
-use Library\DB;
 use Library\Response;
 
 class User extends Controller

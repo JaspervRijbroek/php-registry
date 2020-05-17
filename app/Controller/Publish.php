@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Model\Packages;
 use Library\Config;
 use Library\Controller;
-use Library\DB;
 use Library\Response;
 use Library\Traits\Authenticate;
 

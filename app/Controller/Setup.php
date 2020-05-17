@@ -7,6 +7,7 @@ namespace App\Controller;
 use Library\Autoloader;
 use Library\Controller;
 use Library\DB;
+use Library\Response;
 
 class Setup extends Controller
 {
@@ -15,7 +16,7 @@ class Setup extends Controller
      *
      * @Route("/migrations/setup")
      */
-    public function index()
+    public function index(): Response
     {
         $db = DB::getInstance();
 

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Library\Controller;
-use Library\DB;
-use Library\Request;
 use Library\Response;
 use Library\Traits\Authenticate;
 
