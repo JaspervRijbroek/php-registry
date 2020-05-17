@@ -8,13 +8,18 @@ class Request
 {
     private $params = [];
     private $body = false;
-    private $headers = false;
+    public $headers = false;
 
     // We don't need to filter data as Medoo does this already, but just to have a fancy wrapper.
 
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    public function getParam(string $param)
+    {
+        return $this->params[$param] ?? false;
     }
 
     public function setParams(array $params = []): Request
@@ -51,8 +56,9 @@ class Request
         if(!$this->headers)
         {
             $this->headers = getallheaders();
+            $this->headers = array_change_key_case($this->headers, CASE_LOWER);
         }
 
-        return $this->headers[$header] ?? false;
+        return $this->headers[strtolower($header)] ?? false;
     }
 }

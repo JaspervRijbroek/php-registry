@@ -21,12 +21,12 @@ class Router
         );
     }
 
-    public static function add($expression, $function, $method = 'get')
+    public static function add($route, $function, $method = 'get')
     {
         array_push(
             self::$routes,
             array(
-                'expression' => $expression,
+                'expression' => self::getRegex($route),
                 'function' => $function,
                 'method' => $method
             )
@@ -62,21 +62,8 @@ class Router
         $route_match_found = false;
 
         foreach (self::$routes as $route) {
-            // If the method matches check the path
-
-            // Add basepath to matching string
-            if ($basepath != '' && $basepath != '/') {
-                $route['expression'] = '(' . $basepath . ')' . $route['expression'];
-            }
-
-            // Add 'find string start' automatically
-            $route['expression'] = '^' . $route['expression'];
-
-            // Add 'find string end' automatically
-            $route['expression'] = $route['expression'] . '$';
-
             // Check path match
-            if (preg_match('#' . $route['expression'] . '#', $path, $matches)) {
+            if (preg_match($route['expression'], $path, $matches)) {
                 $path_match_found = true;
 
                 // Check method match
@@ -115,13 +102,19 @@ class Router
 
         $request->setParams($params);
 
-        $controller = $route['function'][0] = new $route['function'][0]($request, $response);
+        $route['function'][0] = new $route['function'][0]($request, $response);
 
         try {
             echo call_user_func_array($route['function'], [$request, $response]);
         } catch (\Exception $e) {
+            error_log($e->getMessage());
             self::sendResponse(500, $e->getMessage());
         } catch (\Error $e) {
+            var_dump($e->getMessage());
+            echo '<pre>';
+                print_r($e->getFile() . '::' . $e->getLine());
+            echo '</pre>';
+            die();
             self::sendResponse(500, $e->getMessage());
         }
 
@@ -135,10 +128,31 @@ class Router
             ->setStatus($status)
             ->setBody(
                 [
+                    'success' => false,
                     'message' => $message
                 ]
             );
 
         return;
+    }
+
+    private static function getRegex($route) {
+        if (preg_match('/[^\-\:\.\/_{}()a-zA-Z\d]/', $route)) {
+            return false; // Invalid pattern
+        }
+
+        // Turn "(/)" into "/?"
+        $pattern = preg_replace('#\(/\)#', '/?', $route);
+
+        // Create capture group for '{parameter}'
+        $allowedParamChars = '[a-zA-Z0-9\_\-\.\@\%]+';
+        $pattern = preg_replace(
+            '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
+            '(?<$1>' . $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+            $pattern
+        );
+
+        // Add start and end matching
+        return "@^" . $pattern . "$@D";
     }
 }

@@ -24,4 +24,9 @@ class Controller
     {
         return $this->response;
     }
+
+    public function getRepository(string $class): Repository
+    {
+        return new Repository($class);
+    }
 }

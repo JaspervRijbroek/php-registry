@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Library\Autoloader;
-use Library\Config;
 use Library\Controller;
 use Library\DB;
 
-class SetupController extends Controller
+class Setup extends Controller
 {
     /**
      * This route is called upon setup.

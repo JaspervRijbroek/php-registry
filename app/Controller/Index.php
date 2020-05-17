@@ -10,7 +10,7 @@ use Library\Request;
 use Library\Response;
 use Library\Traits\Authenticate;
 
-class IndexController extends Controller
+class Index extends Controller
 {
     use Authenticate;
 
