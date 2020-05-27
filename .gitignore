@@ -1,3 +1,4 @@
 .idea
-packages
-database.db
+storage/packages
+storage/db/database.db
+storage/cache

@@ -55,11 +55,11 @@ trait Authenticate
      * @param string $role The role to check if the user has permission
      * @return array The user if the current user has the requested permission.
      */
-    public function authenticate(string $role): Users
+    public function authenticate(string $role = ''): Users
     {
         $user = $this->getUser();
 
-        if(!in_array($role, $user->getRoles())) {
+        if(!empty($role) && !in_array($role, $user->getRoles())) {
             throw new \Error('No permissions for this operation');
         }
 

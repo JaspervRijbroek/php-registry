@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Library\Autoloader;
+use Library\Config;
 use Library\Controller;
 use Library\DB;
 use Library\Response;
@@ -45,7 +45,7 @@ class Setup extends Controller
     public function migrate() {
         // Run all migrations by doing a glob and sending them all.
         $db = DB::getInstance();
-        $files = glob(Autoloader::getRoot() . '/migrations/*');
+        $files = glob(Config::get('db.migrations.path') . '/migrations/*');
         $migrationsDone = $db->select('migrations', ['timestamp']);
         $migrationsDone = array_column($migrationsDone, 'timestamp');
 

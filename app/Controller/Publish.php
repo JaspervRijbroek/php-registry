@@ -35,7 +35,7 @@ class Publish extends Controller
         // We will only support uploading a single version at a time, this only is also possible with npm.
         if (!count($versions) || count($versions) > 1) {
             // We only accept one!
-            die('Called');
+            throw new \Error('Only one version per upload accepted');
         }
 
         $version = array_shift($versions);
@@ -53,14 +53,7 @@ class Publish extends Controller
 
         if ($count) {
             // This version already exists.
-            return $this->response
-                ->setStatus(409)
-                ->setBody(
-                    [
-                        'success' => false,
-                        'message' => 'Package already exists'
-                    ]
-                );
+            throw new \Error('This version of this package already exists.');
         }
 
         $uploadPath = Config::get('upload.path');
@@ -69,15 +62,14 @@ class Publish extends Controller
         @mkdir(dirname($filePath), 777, true);
         @file_put_contents($filePath, base64_decode($attachment['data']));
 
+        $content = $this->request->getBody('versions');
+        $content = $content[$version];
+
         /* @var $package Packages */
         $package = $repository->create();
         $package->setName($packageName)
             ->setVersion($version)
-            ->setContent(
-                [
-
-                ]
-            )
+            ->setContent($content)
             ->setOwner((int) $user->getId())
             ->setFile($filePath);
 

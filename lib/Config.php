@@ -12,15 +12,6 @@ class Config
     {
         // First part is the file, following parts is the item.
         $parts = explode('.', $item);
-        $filename = array_shift($parts);
-
-        if(!isset(self::$config[$filename])) {
-            $file = Autoloader::getRoot() . '/config/' . $filename . '.php';
-
-            if (file_exists($file)) {
-                self::$config[$filename] = require_once $file;
-            }
-        }
 
         return array_reduce(
             $parts,
@@ -31,7 +22,16 @@ class Config
 
                 return $carry[$key];
             },
-            self::$config[$filename]
+            self::getConfig()
         );
+    }
+
+    private static function getConfig(): array
+    {
+        if(empty(self::$config)) {
+            self::$config = require_once getcwd() . '/config.php';
+        }
+
+        return self::$config;
     }
 }

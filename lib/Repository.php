@@ -21,7 +21,7 @@ class Repository
 
     public function find(int $id): Model
     {
-        $results = $this->findBy('id', $id);
+        $results = $this->findBy(['id' => $id]);
 
         return array_shift($results);
     }
@@ -36,12 +36,12 @@ class Repository
      * @param $value string The value on which to check
      * @return array The model instances found by the query.
      */
-    public function findBy($column, $value = ''): array
+    public function findBy(array $filter = []): array
     {
         $results = DB::getInstance()->select(
             $this->getTableName(),
             '*',
-            is_array($column) ? $column : [$column => $value]
+            $filter
         );
         $results = array_map(
             function ($result) {

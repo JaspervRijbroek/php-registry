@@ -6,11 +6,10 @@ namespace Library;
 
 class Response
 {
-    private $status = 200;
-    private $body = [];
-
     public const STATUS_CREATED = 201;
     public const STATUS_OK = 200;
+    private $status = 200;
+    private $body = [];
 
     public function setStatus(int $status = self::STATUS_OK): Response
     {
@@ -19,16 +18,16 @@ class Response
         return $this;
     }
 
-    public function setBody(array $body): Response
+    public function downloadFile(string $filePath): void
     {
-        $this->body = $body;
+        http_response_code($this->status);
+        header('Content-Type: application/octet-stream');
+        header('Content-Description: File Transfer');
+        header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
 
-        return $this;
-    }
+        readfile($filePath);
 
-    public function getBody(): string
-    {
-        return json_encode($this->body);
+        return;
     }
 
     public function __toString(): string
@@ -37,5 +36,17 @@ class Response
         header('Content-Type: application/json');
 
         return $this->getBody();
+    }
+
+    public function getBody(): string
+    {
+        return json_encode($this->body);
+    }
+
+    public function setBody(array $body): Response
+    {
+        $this->body = $body;
+
+        return $this;
     }
 }

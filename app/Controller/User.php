@@ -7,20 +7,21 @@ namespace App\Controller;
 use App\Model\Users;
 use Library\Controller;
 use Library\Response;
+use Library\Traits\Authenticate;
 
 class User extends Controller
 {
+    use Authenticate;
+
     /**
      * @Route("/-/user/org.couchdb.user:{user}", "PUT")
      */
     public function login()
     {
-        error_log(print_r($this->request->getBody(), true));
-
         $repository = $this->getRepository(Users::class);
-        $users = $repository->findBy('username', $this->request->getBody('name'));
+        $users = $repository->findBy(['username' => $this->request->getBody('name')]);
 
-        if(!count($users)) {
+        if (!count($users)) {
             return $this->response
                 ->setStatus(404)
                 ->setBody(
@@ -63,6 +64,25 @@ class User extends Controller
                 [
                     'ok' => 'Authenticated as ' . $user->getUsername(),
                     'token' => $token
+                ]
+            );
+    }
+
+    /**
+     * This method checks who is currently logged in for this request
+     *
+     * @Route("/whoami")
+     * @Route("/-/whoami")
+     * @return Response The response for this request.
+     */
+    public function whoami(): Response
+    {
+        $user = $this->authenticate();
+
+        return $this->response
+            ->setBody(
+                [
+                    'username' => $user->getUsername()
                 ]
             );
     }
